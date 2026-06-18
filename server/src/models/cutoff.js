@@ -1,47 +1,30 @@
 const mongoose = require("mongoose");
 
-const cutoffSchema = new mongoose.Schema(
-  {
-    collegeCode: {
-      type: String,
-      required: true,
-    },
+const cutoffSchema = new mongoose.Schema({
+  collegeCode: String,
+  collegeName: String,
 
-    collegeName: {
-      type: String,
-      required: true,
-    },
+  place: String,
+  district: String,
 
-    district: String,
+  coEducation: String,
+  collegeType: String,
 
-    branchCode: {
-      type: String,
-      required: true,
-    },
+  branchCode: String,
+  branchName: String,
 
-    branchName: {
-      type: String,
-      required: true,
-    },
+  affiliatedTo: String,
 
-    year: {
-      type: Number,
-      required: true,
-    },
+  year: Number,
+  phase: Number,
 
-    phase: {
-      type: Number,
-      required: true,
-    },
-
-    cutoffs: {
-      type: Object,
-      required: true,
-    }
-  },
-  {
-    timestamps: true,
+  cutoffs: {
+    type: Map,
+    of: Number
   }
-);
+});
 
-module.exports = mongoose.model("Cutoff", cutoffSchema);
+module.exports = mongoose.model(
+  "Cutoff",
+  cutoffSchema
+);
