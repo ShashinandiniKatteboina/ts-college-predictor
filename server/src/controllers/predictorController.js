@@ -1,15 +1,25 @@
-const Cutoff = require("../models/Cutoff");
+const Cutoff = require("../models/cutoff");
 
 const predictCollege = async (req, res) => {
   try {
-    const { rank, category, gender, branch } = req.body;
+    const { rank, category, gender, branch, phase } = req.body;
+
+    const rankNum = parseInt(rank, 10);
+    const phaseNum = parseInt(phase, 10) || 3;
+
+    if (isNaN(rankNum)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please enter a valid numeric rank"
+      });
+    }
 
     const columnName = `${category} ${gender}`;
 
     const colleges = await Cutoff.find({
       "Branch Code": branch,
-      Phase: 3
-    });
+      Phase: phaseNum
+    }).lean();
 
     const results = [];
 
@@ -20,11 +30,11 @@ const predictCollege = async (req, res) => {
 
       let chance = "";
 
-      if (rank <= cutoff * 0.8) {
+      if (rankNum <= cutoff * 0.8) {
         chance = "Very High";
-      } else if (rank <= cutoff) {
+      } else if (rankNum <= cutoff) {
         chance = "High";
-      } else if (rank <= cutoff + 2000) {
+      } else if (rankNum <= cutoff + 2000) {
         chance = "Possible";
       } else {
         return;
