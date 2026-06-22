@@ -5,7 +5,7 @@ function PredictorForm({ onSubmit }) {
     rank: "",
     category: "OC",
     gender: "BOYS",
-    branch: "CSE",
+    branch: "ALL",
     phase: "3"
   });
 
@@ -112,6 +112,7 @@ function PredictorForm({ onSubmit }) {
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-xl bg-slate-900/60 border border-white/10 text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200 appearance-none"
             >
+              <option value="ALL" className="bg-slate-950">All Branches</option>
               <option value="CSE" className="bg-slate-950">CSE (Computer Science & Eng.)</option>
               <option value="CSM" className="bg-slate-950">CSM (CSE - AI & ML)</option>
               <option value="CSD" className="bg-slate-950">CSD (CSE - Data Science)</option>

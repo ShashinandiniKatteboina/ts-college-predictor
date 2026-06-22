@@ -12,6 +12,46 @@
   --animate-gradient-shift: gradient-shift 15s ease infinite;
 }
 
+:root {
+  /* Dark Mode Default Values - eye-friendly, not too bright */
+  --color-bg: #0b0c15;
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-text-main: #94a3b8; /* slate-400 */
+  --color-text-hover: #cbd5e1; /* slate-300 */
+  --color-text-heading: #e2e8f0; /* slate-200 */
+  --color-text-muted: #64748b; /* slate-500 */
+  --color-input-bg: rgba(9, 10, 22, 0.65);
+  --color-input-text: #e2e8f0;
+  --color-nav-bg: rgba(9, 10, 22, 0.8);
+  --color-table-header-bg: rgba(255, 255, 255, 0.015);
+  --color-card-bg: rgba(255, 255, 255, 0.015);
+  --color-indigo-text: #818cf8; /* indigo-400 */
+  --glass-panel-bg: rgba(15, 17, 36, 0.7);
+  --glass-panel-shadow: rgba(0, 0, 0, 0.45);
+  --radial-gradient-1: rgba(99, 102, 241, 0.06);
+  --radial-gradient-2: rgba(139, 92, 246, 0.06);
+}
+
+:root.light {
+  /* Light Mode Values */
+  --color-bg: #f8fafc; /* slate-50 */
+  --color-border: rgba(15, 23, 42, 0.08); /* slate-900 with low opacity */
+  --color-text-main: #334155; /* slate-700 */
+  --color-text-hover: #0f172a; /* slate-900 */
+  --color-text-heading: #1e293b; /* slate-800 */
+  --color-text-muted: #64748b; /* slate-500 */
+  --color-input-bg: #ffffff;
+  --color-input-text: #1e293b;
+  --color-nav-bg: rgba(255, 255, 255, 0.85);
+  --color-table-header-bg: rgba(15, 23, 42, 0.025);
+  --color-card-bg: rgba(255, 255, 255, 0.75);
+  --color-indigo-text: #4f46e5; /* indigo-600 */
+  --glass-panel-bg: rgba(255, 255, 255, 0.85);
+  --glass-panel-shadow: rgba(15, 23, 42, 0.04);
+  --radial-gradient-1: rgba(99, 102, 241, 0.03);
+  --radial-gradient-2: rgba(139, 92, 246, 0.03);
+}
+
 @keyframes gradient-shift {
   0%, 100% {
     background-position: 0% 50%;
@@ -23,32 +63,51 @@
 
 body {
   font-family: var(--font-outfit);
-  background-color: var(--color-bg-dark);
-  color: #f1f5f9;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+    radial-gradient(circle at 10% 20%, var(--radial-gradient-1) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, var(--radial-gradient-2) 0%, transparent 40%);
   background-attachment: fixed;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Base interactive elements styling */
+input, select {
+  background-color: var(--color-input-bg) !important;
+  color: var(--color-input-text) !important;
+  border-color: var(--color-border) !important;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+input::placeholder {
+  color: var(--color-text-muted) !important;
+}
+
+select option {
+  background-color: var(--color-input-bg) !important;
+  color: var(--color-input-text) !important;
 }
 
 /* Glassmorphism utility */
 .glass-panel {
-  background: rgba(15, 17, 36, 0.65);
+  background: var(--glass-panel-bg);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 32px 0 var(--glass-panel-shadow);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
   backdrop-filter: blur(8px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--color-card-bg);
   border-color: rgba(99, 102, 241, 0.25);
   transform: translateY(-2px);
   box-shadow: 0 12px 24px -10px rgba(99, 102, 241, 0.15);
@@ -79,4 +138,86 @@ body {
 
 .glow-btn:hover::after {
   left: 125%;
+}
+
+/* Font and background color overrides for DARK mode (soft slates, not blinding white) */
+body:not(.light) .text-white {
+  color: var(--color-text-heading) !important;
+}
+body:not(.light) .text-slate-100 {
+  color: var(--color-text-heading) !important;
+}
+body:not(.light) .text-slate-200 {
+  color: var(--color-text-heading) !important;
+}
+body:not(.light) .text-slate-300 {
+  color: var(--color-text-hover) !important;
+}
+
+/* CSS classes overrides for LIGHT mode */
+.light .text-white, 
+.light .text-slate-100, 
+.light .text-slate-200 {
+  color: var(--color-text-heading) !important;
+}
+
+.light .text-slate-300 {
+  color: var(--color-text-main) !important;
+}
+
+.light .text-slate-400 {
+  color: var(--color-text-muted) !important;
+}
+
+.light .text-slate-500 {
+  color: var(--color-text-muted) !important;
+  opacity: 0.8;
+}
+
+.light .bg-slate-950,
+.light .bg-slate-950\/40,
+.light .bg-slate-950\/75 {
+  background-color: var(--color-nav-bg) !important;
+}
+
+.light .border-white\/5,
+.light .border-white\/10 {
+  border-color: var(--color-border) !important;
+}
+
+.light .bg-white\/\[0\.02\] {
+  background-color: var(--color-table-header-bg) !important;
+}
+
+.light .bg-slate-800\/80 {
+  background-color: rgba(15, 23, 42, 0.07) !important;
+  color: var(--color-text-main) !important;
+}
+
+.light .text-indigo-400 {
+  color: var(--color-indigo-text) !important;
+}
+
+.light .bg-indigo-500\/5 {
+  background-color: rgba(79, 70, 229, 0.05) !important;
+}
+
+.light .border-indigo-500\/10 {
+  border-color: rgba(79, 70, 229, 0.15) !important;
+}
+
+/* Gradient Title override for light mode */
+.light .bg-gradient-to-r.from-white.via-slate-200.to-slate-400,
+.light .bg-gradient-to-r.from-white.via-slate-100.to-slate-400 {
+  background-image: linear-gradient(to right, #4f46e5, #7c3aed) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+.light .bg-gradient-to-r.from-white.via-slate-100.to-slate-300 {
+  background-image: linear-gradient(to right, #1e293b, #475569) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
 }

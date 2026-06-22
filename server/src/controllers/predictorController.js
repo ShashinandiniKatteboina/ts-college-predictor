@@ -16,10 +16,16 @@ const predictCollege = async (req, res) => {
 
     const columnName = `${category} ${gender}`;
 
-    const colleges = await Cutoff.find({
-      "Branch Code": branch,
+    const query = {
       Phase: phaseNum
-    }).lean();
+    };
+
+    if (branch && branch !== "ALL") {
+      query["Branch Code"] = branch;
+    }
+
+    const colleges = await Cutoff.find(query).lean();
+
 
     const results = [];
 
@@ -45,6 +51,8 @@ const predictCollege = async (req, res) => {
         collegeName: college["Institute Name"],
         branchCode: college["Branch Code"],
         branchName: college["Branch Name"],
+        place: college["Place"],
+        district: college["Dist Code"],
         cutoff,
         chance
       });
